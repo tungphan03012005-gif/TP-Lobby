@@ -1,0 +1,14 @@
+-- Script Teleport ngộ nghĩnh & tối giản cho Delta
+local p = game:GetService("Players").LocalPlayer
+local root = (p.Character or p.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart")
+
+-- Tìm lửa trại / đảo an toàn và dịch chuyển ngay lập tức
+local target = nil
+for _, v in ipairs(workspace:GetDescendants()) do
+    if v.Name:lower():find("fire") or v.Name:lower():find("safe") or v.Name:lower():find("spawn") then
+        target = v:IsA("Model") and (v.PrimaryPart or v:FindFirstChildWhichIsA("BasePart")) or (v:IsA("BasePart") and v)
+        if target then break end
+    end
+end
+
+root.CFrame = target and (target.CFrame + Vector3.new(0, 5, 0)) or CFrame.new(0, 20, 0)
